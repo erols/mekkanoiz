@@ -36,6 +36,8 @@ var HEIGHT = window.innerHeight;
 
 var maxFreq = 6000;
 var maxVol = 1;
+var maxRed = 255;
+var maxBlue = 255;
 
 var initialFreq = 3000;
 var initialVol = 0.5;
@@ -51,12 +53,26 @@ var CurY;
 
 document.onmousemove = updatePage;
 
+var canvas = document.querySelector('.canvas');
+console.log("canvas is ", canvas)
+canvas.width = WIDTH;
+canvas.height = HEIGHT;
+
+
 function updatePage(e) {   
     CurX = (window.Event) ? e.pageX : event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
     CurY = (window.Event) ? e.pageY : event.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
     
     osc1.frequency.value = (CurX/WIDTH) * maxFreq;
     gain1.gain.value = (CurY/HEIGHT) * maxVol;
+    document.body.style.backgroundColor = (CurX/WIDTH) * maxRed;
+    document.body.style.backgroundColor = (CurY/WIDTH) * maxBlue;
 
-    canvasDraw();
+
+
+	var canvasCtx = canvas.getContext('2d');
+
+	canvasCtx.fillStyle = 'rgb(' + (CurY/WIDTH) * maxBlue + ', 128, ' + (CurY/WIDTH) * maxBlue + ')';
+
+    //canvasDraw();
 }
